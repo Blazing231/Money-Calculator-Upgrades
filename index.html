@@ -9,21 +9,45 @@ html, body{
     margin:0;
     padding:0;
     font-family:Arial, sans-serif;
-    background: linear-gradient(to right,#0f2027,#203a43,#2c5364);
-    color:white;
     text-align:center;
+    color:white;
+
+    /* Animated gradient background */
+    background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
+    background-size:400% 400%;
+    animation: gradientBG 15s ease infinite;
+
     min-height:100vh;
     display:flex;
     flex-direction:column;
 }
 
-h1{
-    margin-top:25px;
-    font-size:28px;
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
-.container{
-    margin-top:40px;
+h1{
+    margin-top:25px;
+    color:#ff9a00;
+    text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;
+}
+
+/* Glowing calculator box */
+.section-box{
+    margin:50px auto;
+    padding:35px;
+    border-radius:20px;
+    border:3px solid #ff9a00;
+    background:rgba(0,0,0,0.75);
+    box-shadow:0 0 25px rgba(255,154,0,0.6);
+    max-width:900px;
+    transition:transform 0.3s ease;
+}
+
+.section-box:hover{
+    transform:scale(1.02);
 }
 
 .row{
@@ -41,13 +65,13 @@ h1{
 }
 
 label{
-    margin-bottom:5px;
+    margin-bottom:6px;
     font-weight:bold;
 }
 
 select,input{
-    padding:6px 10px;
-    border-radius:6px;
+    padding:7px 10px;
+    border-radius:8px;
     border:none;
     font-size:14px;
 }
@@ -56,6 +80,7 @@ input[type="number"]{
     width:90px;
 }
 
+/* Moon trait style */
 .moon{
     text-align:center;
 }
@@ -66,28 +91,41 @@ input[type="number"]{
     font-size:13px;
 }
 
+/* Result glow */
 #moneyResult{
     margin-top:30px;
-    font-size:30px;
+    font-size:32px;
     font-weight:bold;
-    color:#ffae7a;
-    text-shadow:0 0 10px #ff4500;
+    color:#ffd700;
+    text-shadow:0 0 15px #ff7f50,0 0 30px #ff4500;
 }
 
-/* Footer pushed to bottom */
+/* Animated glowing footer */
 .footer{
     margin-top:auto;
-    padding:80px 0 40px 0;
-    font-size:18px;
+    padding:90px 0 40px 0;
+    font-size:20px;
+    font-weight:bold;
     color:#ffd700;
+    animation: glowPulse 2.5s infinite alternate;
 }
+
+@keyframes glowPulse{
+    from{
+        text-shadow:0 0 10px #ff7f50,0 0 20px #ff4500;
+    }
+    to{
+        text-shadow:0 0 20px #ffd700,0 0 35px #ff8c00;
+    }
+}
+
 </style>
 </head>
 <body>
 
 <h1>💰 Money Calculator 💰</h1>
 
-<div class="container">
+<div class="section-box">
     <div class="row">
 
         <div class="field">
@@ -175,7 +213,7 @@ function calculateMoney(){
 
   let multi=parseFloat(multiplierInput.value);
 
-  // HARD LIMIT at 17
+  // HARD CAP at 17
   if(multi>17){
     multi=17;
     multiplierInput.value=17;
@@ -196,8 +234,8 @@ function formatHuge(num){
   const units=["M","B","T","Qd","Qn","Sx"];
   let n=num,i=0;
   while(n>=1000&&i<units.length-1){
-    n/=1000;
-    i++;
+      n/=1000;
+      i++;
   }
   return n.toFixed(2)+" "+units[i]+"/s";
 }
