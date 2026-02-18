@@ -2,111 +2,131 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Survive Lava for Brainrots Money Calculator</title>
+<title>Money Calculator</title>
+
 <style>
-  html, body {
-    margin:0; padding:0; font-family:Arial, sans-serif; text-align:center;
-    background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
-    background-size:400% 400%;
-    animation: gradientBG 15s ease infinite; color:white;
-  }
-  @keyframes gradientBG{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
-  h1{
-    color:#ff9a00; 
-    text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500; 
-    margin-top:20px;
-  }
-  .section-box{
-    padding:30px; 
-    border-radius:20px; 
-    border:3px solid #ff9a00;
-    background:rgba(0,0,0,0.7); 
-    box-shadow:0 0 30px rgba(255,154,0,0.5);
-    min-width:520px; 
-    max-width:800px;
-    margin:50px auto;
-    transition: transform 0.3s;
-  }
-  .section-box:hover{
-    transform: scale(1.02);
-  }
-  select, input{
-    margin:5px; padding:8px; border-radius:8px; border:none;
-    font-size:16px;
-  }
-  .horizontal-flex{
-    display:flex; 
-    flex-wrap:wrap; 
-    justify-content:center; 
-    gap:15px; 
-    align-items:center;
-  }
-  .horizontal-flex > div{
-    display:flex; 
-    flex-direction:column; 
-    margin:5px;
+html, body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    background: linear-gradient(to right,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+h1{
+    margin-top:25px;
+    font-size:28px;
+}
+
+.container{
+    margin-top:40px;
+}
+
+.row{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
     text-align:left;
-  }
-  #moneyResult{
-    font-size:32px; 
-    font-weight:bold; 
-    margin-top:25px; 
-    text-shadow:0 0 15px #ff7f50,0 0 30px #ff4500;
+}
+
+label{
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+select,input{
+    padding:6px 10px;
+    border-radius:6px;
+    border:none;
+    font-size:14px;
+}
+
+input[type="number"]{
+    width:90px;
+}
+
+.moon{
+    text-align:center;
+}
+
+.moon small{
+    display:block;
+    margin-top:4px;
+    font-size:13px;
+}
+
+#moneyResult{
+    margin-top:30px;
+    font-size:30px;
+    font-weight:bold;
+    color:#ffae7a;
+    text-shadow:0 0 10px #ff4500;
+}
+
+/* Footer pushed to bottom */
+.footer{
+    margin-top:auto;
+    padding:80px 0 40px 0;
+    font-size:18px;
     color:#ffd700;
-  }
-  label{margin-bottom:5px; font-weight:bold; cursor:pointer;}
-  .footer{
-    margin-top:50px; 
-    font-size:20px; 
-    font-weight:bold; 
-    color:#ffd700;
-    text-shadow:0 0 12px #ff7f50,0 0 25px #ff4500;
-  }
+}
 </style>
 </head>
 <body>
 
-<h1>💰 Survive Lava Money Calculator 💰</h1>
+<h1>💰 Money Calculator 💰</h1>
 
-<div class="section-box">
-  <div class="horizontal-flex">
-    <div>
-      <label for="moneyBrainrot">Brainrot:</label>
-      <select id="moneyBrainrot"></select>
-    </div>
-    <div>
-      <label for="moneyMutation">Mutation:</label>
-      <select id="moneyMutation"></select>
-    </div>
-    <div>
-      <label for="moneyLevel">Level (1-100):</label>
-      <input type="number" id="moneyLevel" min="1" max="100" value="1" style="width:90px;">
-    </div>
-    <div>
-      <label for="moneyMultiplier">Base Multiplier:</label>
-      <input type="number" id="moneyMultiplier" step="0.1" value="1" style="width:90px;">
-    </div>
-    <div>
-      <label for="moneyMoon">
-        <input type="checkbox" id="moneyMoon" style="margin-right:5px;"> Moon Trait ×3
-      </label>
-    </div>
-  </div>
+<div class="container">
+    <div class="row">
 
-  <h2 id="moneyResult">Result: 0</h2>
+        <div class="field">
+            <label>Brainrot:</label>
+            <select id="moneyBrainrot"></select>
+        </div>
+
+        <div class="field">
+            <label>Mutation:</label>
+            <select id="moneyMutation"></select>
+        </div>
+
+        <div class="field">
+            <label>Level (1-100):</label>
+            <input type="number" id="moneyLevel" min="1" max="100" value="1">
+        </div>
+
+        <div class="field">
+            <label>Base Multiplier:</label>
+            <input type="number" id="moneyMultiplier" min="1" max="17" step="0.1" value="1">
+        </div>
+
+        <div class="field moon">
+            <label>Moon Trait:</label>
+            <input type="checkbox" id="moneyMoon">
+            <small>×3</small>
+        </div>
+
+    </div>
+
+    <div id="moneyResult">Result: 0</div>
 </div>
 
 <div class="footer">
-  Creator: qn94_ (Blazing) <br>
-  Credits: exotic4410 (Exotic)
+    Creator: qn94_ (Blazing)<br>
+    Credits: exotic4410 (Exotic)
 </div>
 
 <script>
-// ================= VALUES =================
 const brainrots = {
   "Disk": {Base:4,Gold:6,Diamond:8,Emerald:12,BloodMoon:16,Rainbow:40},
   "Swag Soda": {Base:4.5,Gold:6.75,Diamond:9,Emerald:13.5,BloodMoon:18,Rainbow:45},
@@ -120,13 +140,15 @@ const brainrots = {
   "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
   "Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
 };
+
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
 const moonMultiplier=3;
 
-// ================= MONEY CALCULATOR =================
 const moneyDropdown=document.getElementById("moneyBrainrot");
 const moneyMutation=document.getElementById("moneyMutation");
 const moneyMoon=document.getElementById("moneyMoon");
+const levelInput=document.getElementById("moneyLevel");
+const multiplierInput=document.getElementById("moneyMultiplier");
 
 Object.keys(brainrots).forEach(name=>{
   const opt=document.createElement("option");
@@ -142,15 +164,23 @@ mutations.forEach(m=>{
   moneyMutation.appendChild(opt);
 });
 
-[moneyDropdown,moneyMutation,moneyMoon,document.getElementById("moneyLevel"),document.getElementById("moneyMultiplier")]
-  .forEach(el=>el.addEventListener("input",calculateMoney));
+[moneyDropdown,moneyMutation,moneyMoon,levelInput,multiplierInput]
+.forEach(el=>el.addEventListener("input",calculateMoney));
 
 function calculateMoney(){
   const brain=moneyDropdown.value;
   const mutation=moneyMutation.value;
   const moon=moneyMoon.checked?moonMultiplier:1;
-  const level=parseInt(document.getElementById("moneyLevel").value);
-  const multi=parseFloat(document.getElementById("moneyMultiplier").value);
+  const level=parseInt(levelInput.value);
+
+  let multi=parseFloat(multiplierInput.value);
+
+  // HARD LIMIT at 17
+  if(multi>17){
+    multi=17;
+    multiplierInput.value=17;
+  }
+
   if(level<1||level>100||multi<=0) return;
 
   const base=brainrots[brain][mutation];
@@ -158,16 +188,21 @@ function calculateMoney(){
   const levelMultiplier = Math.pow(1.25, level-1);
   const finalTotal = basePower * levelMultiplier;
 
-  document.getElementById("moneyResult").innerText = "Result: "+formatHuge(finalTotal);
+  document.getElementById("moneyResult").innerText=
+      "Result: "+formatHuge(finalTotal);
 }
 
-// Format using short units: M, B, T, Qd, Qn, Sx
 function formatHuge(num){
   const units=["M","B","T","Qd","Qn","Sx"];
-  let n=num, i=0;
-  while(n>=1000 && i<units.length-1){ n/=1000; i++; }
+  let n=num,i=0;
+  while(n>=1000&&i<units.length-1){
+    n/=1000;
+    i++;
+  }
   return n.toFixed(2)+" "+units[i]+"/s";
 }
+
+calculateMoney();
 </script>
 
 </body>
