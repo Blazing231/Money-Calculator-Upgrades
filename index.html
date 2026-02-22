@@ -11,20 +11,33 @@ html, body{
     font-family:Arial, sans-serif;
     text-align:center;
     color:white;
-
-    background: linear-gradient(-45deg,#1f1c2c,#928dab,#1f4037,#99f2c8);
-    background-size:400% 400%;
-    animation: gradientBG 15s ease infinite;
-
     min-height:100vh;
     display:flex;
     flex-direction:column;
+    overflow-x:hidden;
 }
 
-@keyframes gradientBG{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+/* ===== ANIME BACKGROUND ===== */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("https://images.alphacoders.com/736/736461.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    z-index:-1;
+    animation:zoomAnime 20s infinite alternate ease-in-out;
+}
+
+@keyframes zoomAnime{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.08); }
 }
 
 h1{
@@ -43,10 +56,7 @@ h1{
     max-width:900px;
     transition:transform 0.3s ease;
 }
-
-.section-box:hover{
-    transform:scale(1.02);
-}
+.section-box:hover{ transform:scale(1.02); }
 
 .row{
     display:flex;
@@ -62,10 +72,7 @@ h1{
     text-align:left;
 }
 
-label{
-    margin-bottom:6px;
-    font-weight:bold;
-}
+label{ margin-bottom:6px; font-weight:bold; }
 
 select,input{
     padding:7px 10px;
@@ -74,13 +81,9 @@ select,input{
     font-size:14px;
 }
 
-input[type="number"]{
-    width:100px;
-}
+input[type="number"]{ width:100px; }
 
-.moon{
-    text-align:center;
-}
+.moon{ text-align:center; }
 
 .moon small{
     display:block;
@@ -115,7 +118,6 @@ input[type="number"]{
 
 <h1>💰 Brainrot Calculator 💰</h1>
 
-<!-- ================= MONEY CALCULATOR ================= -->
 <div class="section-box">
 <h2 style="color:#ffd700;">Money Calculator</h2>
 <div class="row">
@@ -147,16 +149,13 @@ input[type="number"]{
 </div>
 
 </div>
-
 <div id="moneyResult">Result: 0</div>
 </div>
 
-<!-- ================= UPGRADE COST CALCULATOR ================= -->
 <div class="section-box">
 <h2 style="color:#00ffcc;">Upgrade Cost Calculator</h2>
 
 <div class="row">
-
 <div class="field">
 <label>Brainrot:</label>
 <select id="upgradeBrainrot"></select>
@@ -182,7 +181,6 @@ input[type="number"]{
 <input type="checkbox" id="upgradeMoon">
 <small>×3</small>
 </div>
-
 </div>
 
 <div id="upgradeResult">Total Cost: 0</div>
@@ -205,7 +203,14 @@ const brainrots = {
 "Elephant": {Base:10,Gold:15,Diamond:20,Emerald:30,BloodMoon:40,Rainbow:100},
 "Los Elephant": {Base:15,Gold:22.5,Diamond:30,Emerald:45,BloodMoon:60,Rainbow:150},
 "Caylus-Steak": {Base:30,Gold:45,Diamond:60,Emerald:90,BloodMoon:120,Rainbow:300},
-"Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500}
+"Dragon": {Base:50,Gold:75,Diamond:100,Emerald:150,BloodMoon:200,Rainbow:500},
+
+"Sodini Machini": {Base:8.6,Gold:12.9,Diamond:17.2,Emerald:25.8,BloodMoon:34.4,Rainbow:86},
+"Spaghetti Toilet": {Base:6.2,Gold:9.3,Diamond:12.4,Emerald:18.6,BloodMoon:24.8,Rainbow:62},
+"Elephant Coconut": {Base:35,Gold:52.5,Diamond:70,Emerald:105,BloodMoon:140,Rainbow:350},
+"hotspot": {Base:3.8,Gold:5.7,Diamond:7.6,Emerald:11.4,BloodMoon:15.2,Rainbow:38},
+"Elefante Lavante": {Base:20,Gold:30,Diamond:40,Emerald:60,BloodMoon:80,Rainbow:200},
+"Luna Spaventusa": {Base:9,Gold:13.5,Diamond:18,Emerald:27,BloodMoon:36,Rainbow:90}
 };
 
 const mutations=["Base","Gold","Diamond","Emerald","BloodMoon","Rainbow"];
@@ -220,7 +225,6 @@ function populate(selectId){
     select.appendChild(opt);
   });
 }
-
 function populateMut(selectId){
   const select=document.getElementById(selectId);
   mutations.forEach(m=>{
@@ -230,7 +234,6 @@ function populateMut(selectId){
     select.appendChild(opt);
   });
 }
-
 populate("moneyBrainrot");
 populate("upgradeBrainrot");
 populateMut("moneyMutation");
@@ -243,49 +246,38 @@ document.querySelectorAll("input, select").forEach(el=>{
   });
 });
 
-// ========== MONEY CALCULATOR ==========
 function calculateMoney(){
   const brain=document.getElementById("moneyBrainrot").value;
   const mutation=document.getElementById("moneyMutation").value;
   const moon=document.getElementById("moneyMoon").checked?moonMultiplier:1;
   const level=parseInt(document.getElementById("moneyLevel").value);
-
   let multi=parseFloat(document.getElementById("moneyMultiplier").value);
   if(multi>17){ multi=17; document.getElementById("moneyMultiplier").value=17; }
   if(level<1||level>100||multi<=0) return;
-
   const base=brainrots[brain][mutation];
   const total=base*multi*moon*Math.pow(1.25,level-1);
-
   document.getElementById("moneyResult").innerText=
   "Result: "+formatHuge(total)+"/s";
 }
 
-// ========== UPGRADE COST CALCULATOR ==========
 function calculateUpgradeCost(){
   const brain=document.getElementById("upgradeBrainrot").value;
   const mutation=document.getElementById("upgradeMutation").value;
   const moon=document.getElementById("upgradeMoon").checked?moonMultiplier:1;
-
   let start=parseInt(document.getElementById("startLevel").value);
   let end=parseInt(document.getElementById("endLevel").value);
-
   if(start<1) start=1;
   if(end>100) end=100;
   if(end<start) end=start;
-
   const base=brainrots[brain][mutation]*moon;
-
   let total=0;
   for(let lvl=start; lvl<end; lvl++){
     total += base*Math.pow(1.45, lvl-1);
   }
-
   document.getElementById("upgradeResult").innerText=
   `Total Cost: ${formatHuge(total)}`;
 }
 
-// Format large numbers with Sp instead of Oc
 function formatHuge(num){
   const units=["M","B","T","Qd","Qn","Sx","Sp","No","Dc"];
   let i=0;
